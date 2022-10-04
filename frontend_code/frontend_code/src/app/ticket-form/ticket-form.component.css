@@ -1,0 +1,16 @@
+:host ::ng-deep .p-dropdown {
+    width: 14rem;
+  }
+  #sect1 {  
+    height: 640px; 
+    background-size:100%;  
+    background-size:cover; 
+    color: #fff;background-image:url("../../assets/36.jpg");
+    background-color: #cccccc; 
+    }
+
+::ng-deep .p-dropdown{
+
+  height: 43px;
+
+    }

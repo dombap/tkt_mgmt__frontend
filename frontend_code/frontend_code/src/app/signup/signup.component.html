@@ -1,0 +1,183 @@
+<app-navbar></app-navbar>
+<section class="h-100 bg-dark">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6 d-none d-xl-block">
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.jpg"
+                alt="Sample photo"
+                class="img-fluid"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;"
+              />
+            </div>
+            <div class="col-xl-6">
+              <div class="card-body p-md-5 text-black">
+                <form #SignupForm="ngForm">
+                <h3 class="mb-5 text-uppercase"> Registration form</h3>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="name" class="form-control form-control-lg" id="firstName" placeholder="Enter first Name" name="firstName"   [(ngModel)]=" signup.firstName" (keypress)="keyPressAlphanumeric($event)" required>
+                      <label for="name" class="form-label">First Name
+                        <span class="required-field"> *</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="lastName" class="form-control form-control-lg" id="lastName" placeholder="Enter last Name" name="lastName"   [(ngModel)]=" signup.lastName" (keypress)="keyPressAlphanumeric($event)" required>
+                      <label for="lastName" class="form-label">Last name
+                        <span class="required-field"> *</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-outline mb-4">
+                  <input type="address" class="form-control form-control-lg" id="address" placeholder="Enter Address" name="address"   [(ngModel)]=" signup.address">
+                  <label class="form-label" for="form3Example8">Address
+                    <span class="required-field"> *</span>
+                  </label>
+                </div>
+
+                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                  <h6 class="mb-0 me-4">Gender
+                    <span class="required-field"> *</span>
+                  </h6>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="femaleGender"
+                      value="F"
+                      [(ngModel)]=" signup.gender"
+                    />
+                    <label class="form-check-label" for="femaleGender">Female</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="maleGender"
+                      value="M"
+                      [(ngModel)]=" signup.gender"
+                    />
+                    <label class="form-check-label" for="maleGender">Male</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="otherGender"
+                      value="O"
+                      [(ngModel)]=" signup.gender"
+                    />
+                    <label class="form-check-label" for="otherGender">Other</label>
+                  </div>
+
+                </div>
+
+
+                <div class="form-outline mb-4">
+                  <input type="pincode" class="form-control form-control-lg" id="pincode" placeholder="Enter pincode" name="pincode" maxlength="6"   [(ngModel)]=" signup.pincode" (keypress)="keyPressNumbers($event)">
+
+                  <label class="form-label" for="form3Example90">Pincode
+                    <span class="required-field"> *</span>
+                    <div *ngIf = "signup.pincode.length < 6">
+                     <i>(Please enter valid 6 digit pincode.)</i> 
+                    </div>
+                  </label>
+                  
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="mobile" class="form-control form-control-lg" id="mobile" placeholder="Enter Mobile " name="mobile"  maxlength="10" [(ngModel)]=" signup.mobile" (keypress)="keyPressNumbers($event)">
+                  <label for="mobile" class="form-label">Mobile Number
+                    <span class="required-field"> *</span>
+                    <div *ngIf = "signup.mobile.length < 10">
+                      <i>(Please enter 10 digit mobile number.)</i>
+                    </div>
+                  </label>
+                 
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="email" class="form-control form-control-lg" id="email" placeholder="Enter email " name="email"   [(ngModel)]=" signup.email" [email]="true">
+                  <label for="email" class="form-label">Email ID
+                    <span class="required-field"> *</span>
+                  </label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter password " name="password"   [(ngModel)]=" signup.password">
+                  <label for="pwd" class="form-label">Password
+                    <span class="required-field"> *</span>
+                    <div *ngIf = "signup.password.length < 8">
+                      <i>(Please enter minimum 8 characters password.)</i> 
+                     </div>
+                  </label>
+                </div>
+
+                <div class="form-outline mb-4">
+                 
+                  <input type="Password" class="form-control form-control-lg" id="confirmPassword" placeholder= " Confirm Password" name="confirmPassword"   [(ngModel)]=" signup.confirmPassword">
+                  <label for="pwd" class="form-label">Confirm Password
+                    <span class="required-field"> *</span>
+                  </label>
+                </div>
+                <div class="d-flex justify-content-end pt-3">
+                  <button type="button" class="btn btn-light btn-lg" (click)="reset()">Reset all</button>
+                  <button type="button" class="btn btn-warning btn-lg ms-2" (click)="onSubmit(signup)"
+                  [disabled] ="!signup.firstName || !signup.lastName || !signup.address || !signup.pincode || !signup.mobile || !signup.email || !signup.password"
+                  >Submit form</button>
+                </div>
+              </form>
+              <p-toast position="center"></p-toast>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <form  #SignupForm="ngForm">
+    <div class="mb-3 mt-3">
+      <label for="name" class="form-label">First Name:</label>
+      <input type="name" class="form-control" id="firstName" placeholder="Enter first Name" name="firstName"   [(ngModel)]=" signup.firstName">
+    </div>
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last 
+        Name:</label>
+      <input type="lastName" class="form-control" id="lastName" placeholder="Enter last Name" name="lastName"   [(ngModel)]=" signup.lastName">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email " name="email"   [(ngModel)]=" signup.email">
+      </div>
+      <div class="mb-3">
+        <label for="pwd" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter password " name="password"   [(ngModel)]=" signup.password">
+      </div>
+      <div class="mb-3">
+        <label for="pwd" class="form-label">ConfirmPassword:</label>
+        <input type="Password" class="form-control" id="confirmPassword" placeholder= " confirm Password" name="confirmPassword"   [(ngModel)]=" signup.confirmPassword">
+      </div>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit(SignupForm)">Signup</button>
+  </form>
+  <p-toast position="center"></p-toast> -->

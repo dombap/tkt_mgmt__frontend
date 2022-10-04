@@ -1,0 +1,192 @@
+<app-navbar></app-navbar>
+<div  id="sect1">
+<p-table [value]="ticket" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th>Id</th>
+            <th>Created By</th>
+            <th>Created For</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>    
+     
+    </ng-template>
+        
+   
+    <ng-template pTemplate="body" let-ticket>
+        <tr>
+            <td>{{ticket.id}}</td>
+            <td>{{ticket.created_by}}</td>
+            <td>{{ticket.created_for}}</td>
+            <td>{{ticket.description}}</td>
+            <td>
+            <button type="submit" class="btn btn-primary" (click)="confirm(ticket.id)">Delete</button>
+            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+   
+    &nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary" (click)="update(ticket)">Update</button> 
+            &nbsp;&nbsp;&nbsp;
+            <button *ngIf="admin" type="submit" class="btn btn-primary" (click)="assign(ticket)">Assign</button> 
+            </td>
+        </tr>
+    
+    </ng-template>
+</p-table>
+</div>
+<div *ngIf="display">
+    <p-dialog header="Update Ticket" [(visible)]="display">
+
+        <section class="h-100 h-custom" style="background-color: #8fc4b7;">
+            <div class="container py-5 h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                  <div class="card rounded-3">
+                    <img src="../../assets/45.jpg" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
+                    <div class="card-body p-4 p-md-5">
+                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Update Ticket</h3>
+          
+                      <form class="px-md-2" #ticketUpdateForm="ngForm">
+          
+                        <div class="form-outline mb-4">
+                            <label for="name" class="form-label">Created By:</label>
+                      &nbsp; &nbsp; &nbsp; 
+                      <p-dropdown
+                      [options]="employeeList"
+                      [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="selectedticket.createdBy1"
+                      placeholder="Select a Name"
+                      optionLabel="firstName"
+                      [showClear]="true"
+                      [scrollHeight] = scrollHeight
+                    ></p-dropdown>
+                        </div>
+          
+
+                        <div class="form-outline mb-4">
+                            <label for="name" class="form-label">Created For:</label>
+                      &nbsp; &nbsp; &nbsp; 
+                      <p-dropdown
+                      [options]="employeeList"
+                      [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="selectedticket.createdFor1"
+                      placeholder="Select a Name"
+                      optionLabel="firstName"
+                      [showClear]="true"
+                      [scrollHeight] = scrollHeight
+                    ></p-dropdown>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label for="category" class="form-label">Category:</label>
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            <p-dropdown
+                            [options]="category"
+                            [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="selectedticket.category1"
+                            placeholder="Select a Category"
+                            optionLabel="name"
+                            [showClear]="true"
+                          ></p-dropdown>
+                        </div>
+
+
+                        <div class="form-outline mb-4">
+                            <label for="pwd" class="form-label">Description:</label>
+                     
+                            <input  class="form-control" id="desc"  name="desc"   [(ngModel)]=" selectedticket.desc1">
+                        </div>
+    
+    
+                       
+          
+          
+                      
+                        <button type="submit" class="btn btn-success btn-lg mb-1" (click)="onUpdate(ticketUpdateForm)">Update</button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-success btn-lg mb-1" (click)="reset(ticketUpdateForm)">Reset</button>
+                        <!-- <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button> -->
+          
+                      </form>
+          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        <!-- <form  #ticketUpdateForm="ngForm">
+            <div class="mb-3 mt-3">
+              <label for="name" class="form-label">Name:</label>
+              <input type="name" class="form-control" id="name" placeholder="Enter name" name="name"   [(ngModel)]="selectedticket.name1">
+            </div>
+            <div class="mb-3">
+              <label for="pwd" class="form-label">Description:</label>
+              <input type="desc" class="form-control" id="desc" placeholder="Enter Description" name="desc"   [(ngModel)]="selectedticket.desc1">
+            </div>
+         
+            <button type="submit" class="btn btn-primary" (click)="onUpdate(ticketUpdateForm)">Update</button>
+            <button type="submit" class="btn btn-primary" (click)="reset(ticketUpdateForm)">Reset</button>
+          </form> -->
+    </p-dialog>
+    </div>
+    <div *ngIf="displayAssign">
+      <p-dialog header="Update Ticket" [(visible)]="displayAssign">
+  
+          <section class="h-100 h-custom" style="background-color: #8fc4b7;">
+              <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                  <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3">
+                      <img src="../../assets/49.jpg" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
+                      <div class="card-body p-4 p-md-5">
+                        <p *ngIf="assigneeDetails">
+                          <b>This ticket is already assigned to <i>"{{assigneeDetails}}"</i>. If you want to change ticket assignee, please update in below form.</b></p>
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Assign Ticket</h3>
+            
+                        <form class="px-md-2" #ticketAssignForm="ngForm">
+          
+                          <div class="form-outline mb-4">
+                              <label for="name" class="form-label">Assign To:</label>
+                        &nbsp; &nbsp; &nbsp; 
+                        <p-dropdown
+                        [options]="employeeList"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="selectedticket.assignTo"
+                        placeholder="Select a Name"
+                        optionLabel="firstName"
+                        [showClear]="true"
+                        [scrollHeight] = scrollHeight
+                      ></p-dropdown>
+                          </div>
+ 
+                          <button type="submit" class="btn btn-success btn-lg mb-1" (click)="updateAssign(ticketAssignForm)">Update</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                          <button type="submit" class="btn btn-success btn-lg mb-1" (click)="reset(ticketAssignForm)">Reset</button>
+                          <!-- <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button> -->
+            
+                        </form>
+            
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          <!-- <form  #ticketUpdateForm="ngForm">
+              <div class="mb-3 mt-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="name" class="form-control" id="name" placeholder="Enter name" name="name"   [(ngModel)]="selectedticket.name1">
+              </div>
+              <div class="mb-3">
+                <label for="pwd" class="form-label">Description:</label>
+                <input type="desc" class="form-control" id="desc" placeholder="Enter Description" name="desc"   [(ngModel)]="selectedticket.desc1">
+              </div>
+           
+              <button type="submit" class="btn btn-primary" (click)="onUpdate(ticketUpdateForm)">Update</button>
+              <button type="submit" class="btn btn-primary" (click)="reset(ticketUpdateForm)">Reset</button>
+            </form> -->
+      </p-dialog>
+      </div>
+    <p-toast position="center"></p-toast>
+   
+    

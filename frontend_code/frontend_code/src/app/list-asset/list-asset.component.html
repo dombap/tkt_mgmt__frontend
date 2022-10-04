@@ -1,0 +1,95 @@
+<app-navbar></app-navbar>
+<div id="sect1">
+  <p-table [value]="asset" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Type</th>
+        <th>Number</th>
+        <th *ngIf="admin">Action</th>
+      </tr>
+
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-asset>
+      <tr>
+        <td>{{asset.id}}</td>
+        <td>{{asset.asset_type}}</td>
+        <td>{{asset.asset_number}}</td>
+        <td *ngIf="admin">
+          <button type="submit" class="btn btn-primary" (click)="confirm(asset.id)">Delete</button>
+          <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+          </p-confirmDialog>
+
+          &nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary" (click)="update(asset)">Update</button>
+          <!-- <button type="submit" class="btn btn-primary" (click)="update(asset)">Update</button>  -->
+          <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+          </p-confirmDialog>
+        </td>
+      </tr>
+
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="display">
+  <p-dialog header="Update Asset" [(visible)]="display">
+
+    <section class="h-100 h-custom" style="background-color: #8fc4b7;">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-lg-8 col-xl-6">
+            <div class="card rounded-3">
+              <img src="../../assets/39.jpg" class="w-100"
+                style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
+              <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Update Asset</h3>
+
+                <form class="px-md-2" #assetUpdateForm="ngForm">
+                  <div class="form-outline mb-4">
+                    <label for="name" class="form-label">Asset Type:</label>
+                    <!-- <p-dropdown
+                                [options]="employeeList"
+                                [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="selectedasset"
+                                placeholder="Select a Name"
+                                optionLabel="firstName"
+                                [showClear]="true"
+                                [scrollHeight] = scrollHeight
+                              ></p-dropdown> -->
+                    <p-dropdown [options]="assets" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="selectedasset.type" optionLabel="type"></p-dropdown>
+
+                  </div>
+
+
+                  <div class="form-outline mb-4">
+                    <label for="lastName" class="form-label">Asset Number</label>
+                    <input class="form-control" id="number" name="number" [(ngModel)]="selectedasset.number">
+
+
+
+                  </div>
+
+
+
+
+
+
+                  <button type="submit" class="btn btn-success btn-lg mb-1"
+                    (click)="onUpdate(assetUpdateForm)">Update</button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type="submit" class="btn btn-success btn-lg mb-1"
+                    (click)="reset(assetUpdateForm)">Reset</button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </p-dialog>
+</div>

@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+   
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: white;">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        </li>
+        
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link active" href="/about">About</a>
+        </li>
+     
+        <li *ngIf="admin" class="nav-item">
+          <a class="nav-link active" href="/addCategory">Create Category</a>
+        </li>
+
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link active" href="/login">Login</a>
+        </li>
+        <li  *ngIf="loggedIn" class="nav-item">
+          <a class="nav-link active" href="/listCategory">Category List</a>
+        </li>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a class="nav-link active" href="/ticketform">Create Ticket</a>
+        </li>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a class="nav-link active" href="/listticket">Ticket List</a>
+        </li>
+        <li *ngIf="admin" class="nav-item">
+          <a class="nav-link active" href="/assets">Assets</a>
+        </li>
+        
+        <li *ngIf="!loggedIn" class="nav-item">
+          <a class="nav-link active" href="/contact">Contact Us</a>
+        </li>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a class="nav-link active" href="/listasset"> Asset List</a>
+        </li>
+
+
+        <li *ngIf="loggedIn" class="nav-item">
+          <a class="nav-link active" href="/listemployee"> Employee List</a>
+        </li>
+      
+
+
+        <li class="nav-item dropdown">
+          
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            
+          </ul>
+        </li>
+    
+      </ul>
+      <form class="d-flex">
+        <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+        <button *ngIf="loggedIn" class="btn btn-outline-success" type="submit" (click)="logout()">Logout</button>
+      </form>
+    </div>
+
+  </div>
+</nav>
